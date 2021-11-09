@@ -42,9 +42,9 @@ startTime = time.time()
 # eg 2.1 Load Data
 
 # Load the data
-train = pd.read_csv('data/train.csv')
-test = pd.read_csv('data/test.csv')
-testFile = pd.read_csv('data/test.csv')
+train = pd.read_csv('../../data/DR/train.csv')
+test = pd.read_csv('../../data/DR/test.csv')
+testFile = pd.read_csv('../../data/DR/test.csv')
 
 Y_train = train["label"]
 
