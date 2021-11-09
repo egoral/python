@@ -29,7 +29,7 @@ import itertools
 from keras.utils.np_utils import to_categorical # convert to one-hot-encoding
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D
-from keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import RMSprop
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ReduceLROnPlateau
 
@@ -152,7 +152,7 @@ model.add(Dense(10, activation = "softmax"))
 # eg 3.2 Set the optimizer and annealer
 
 # Define the optimizer
-optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
+optimizer = RMSprop(learning_rate=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
 # Compile the model
 model.compile(optimizer = optimizer , loss = "categorical_crossentropy", metrics=["accuracy"])
 # Set a learning rate annealer
@@ -161,7 +161,7 @@ learning_rate_reduction = ReduceLROnPlateau(monitor='val_accuracy',
                                             verbose=1, 
                                             factor=0.5, 
                                             min_lr=0.00001)
-epochs = 25 # Turn epochs to 30 to get 0.9967 accuracy
+epochs = 30 # Turn epochs to 30 to get 0.9967 accuracy
 batch_size = 86
 
 
@@ -191,7 +191,7 @@ datagen = ImageDataGenerator(
 datagen.fit(X_train)
 
 # Fit the model
-history = model.fit_generator(datagen.flow(X_train,Y_train, batch_size=batch_size),
+history = model.fit(datagen.flow(X_train,Y_train, batch_size=batch_size),
                               epochs = epochs, validation_data = (X_val,Y_val),
                               verbose = 2, steps_per_epoch=X_train.shape[0] // batch_size
                               , callbacks=[learning_rate_reduction])
